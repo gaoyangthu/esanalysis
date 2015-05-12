@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MasterOrderMapper">
+	<resultMap id="BaseResultMap" type="MasterOrder">
+		<id column="master_order_id" property="masterOrderId" jdbcType="VARCHAR"/>
+		<result column="master_order_no" property="masterOrderNo" jdbcType="VARCHAR"/>
+		<result column="master_order_orig_id" property="masterOrderOrigId" jdbcType="VARCHAR"/>
+		<result column="master_order_type" property="masterOrderType" jdbcType="INTEGER"/>
+		<result column="FK_contract_id" property="fkContractId" jdbcType="VARCHAR"/>
+		<result column="FK_account_id" property="fkAccountId" jdbcType="VARCHAR"/>
+		<result column="FK_user_id" property="fkUserId" jdbcType="VARCHAR"/>
+		<result column="account_type" property="accountType" jdbcType="VARCHAR"/>
+		<result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+		<result column="custom_price" property="customPrice" jdbcType="DECIMAL"/>
+		<result column="discounted_price" property="discountedPrice" jdbcType="DECIMAL"/>
+		<result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    master_order_id, master_order_no, master_order_orig_id, master_order_type, FK_contract_id, 
+    FK_account_id, FK_user_id, account_type, total_price, custom_price, discounted_price, 
+    pay_type, description, create_date, update_date, status, remark
+  </sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from master_order
+		where master_order_id = #{masterOrderId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from master_order
+    where master_order_id = #{masterOrderId,jdbcType=VARCHAR}
+  </delete>
+	<insert id="insert" parameterType="MasterOrder">
+    insert into master_order (master_order_id, master_order_no, master_order_orig_id, 
+      master_order_type, FK_contract_id, FK_account_id, 
+      FK_user_id, account_type, total_price, 
+      custom_price, discounted_price, pay_type, 
+      description, create_date, update_date, 
+      status, remark)
+    values (#{masterOrderId,jdbcType=VARCHAR}, #{masterOrderNo,jdbcType=VARCHAR}, #{masterOrderOrigId,jdbcType=VARCHAR}, 
+      #{masterOrderType,jdbcType=INTEGER}, #{fkContractId,jdbcType=VARCHAR}, #{fkAccountId,jdbcType=VARCHAR}, 
+      #{fkUserId,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{customPrice,jdbcType=DECIMAL}, #{discountedPrice,jdbcType=DECIMAL}, #{payType,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+	<insert id="insertSelective" parameterType="MasterOrder">
+		insert into master_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="masterOrderId != null">
+				master_order_id,
+			</if>
+			<if test="masterOrderNo != null">
+				master_order_no,
+			</if>
+			<if test="masterOrderOrigId != null">
+				master_order_orig_id,
+			</if>
+			<if test="masterOrderType != null">
+				master_order_type,
+			</if>
+			<if test="fkContractId != null">
+				FK_contract_id,
+			</if>
+			<if test="fkAccountId != null">
+				FK_account_id,
+			</if>
+			<if test="fkUserId != null">
+				FK_user_id,
+			</if>
+			<if test="accountType != null">
+				account_type,
+			</if>
+			<if test="totalPrice != null">
+				total_price,
+			</if>
+			<if test="customPrice != null">
+				custom_price,
+			</if>
+			<if test="discountedPrice != null">
+				discounted_price,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="masterOrderId != null">
+				#{masterOrderId,jdbcType=VARCHAR},
+			</if>
+			<if test="masterOrderNo != null">
+				#{masterOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="masterOrderOrigId != null">
+				#{masterOrderOrigId,jdbcType=VARCHAR},
+			</if>
+			<if test="masterOrderType != null">
+				#{masterOrderType,jdbcType=INTEGER},
+			</if>
+			<if test="fkContractId != null">
+				#{fkContractId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkAccountId != null">
+				#{fkAccountId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkUserId != null">
+				#{fkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="accountType != null">
+				#{accountType,jdbcType=VARCHAR},
+			</if>
+			<if test="totalPrice != null">
+				#{totalPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="customPrice != null">
+				#{customPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="discountedPrice != null">
+				#{discountedPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="MasterOrder">
+		update master_order
+		<set>
+			<if test="masterOrderNo != null">
+				master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="masterOrderOrigId != null">
+				master_order_orig_id = #{masterOrderOrigId,jdbcType=VARCHAR},
+			</if>
+			<if test="masterOrderType != null">
+				master_order_type = #{masterOrderType,jdbcType=INTEGER},
+			</if>
+			<if test="fkContractId != null">
+				FK_contract_id = #{fkContractId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkAccountId != null">
+				FK_account_id = #{fkAccountId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkUserId != null">
+				FK_user_id = #{fkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="accountType != null">
+				account_type = #{accountType,jdbcType=VARCHAR},
+			</if>
+			<if test="totalPrice != null">
+				total_price = #{totalPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="customPrice != null">
+				custom_price = #{customPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="discountedPrice != null">
+				discounted_price = #{discountedPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where master_order_id = #{masterOrderId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="MasterOrder">
+    update master_order
+    set master_order_no = #{masterOrderNo,jdbcType=VARCHAR},
+      master_order_orig_id = #{masterOrderOrigId,jdbcType=VARCHAR},
+      master_order_type = #{masterOrderType,jdbcType=INTEGER},
+      FK_contract_id = #{fkContractId,jdbcType=VARCHAR},
+      FK_account_id = #{fkAccountId,jdbcType=VARCHAR},
+      FK_user_id = #{fkUserId,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      custom_price = #{customPrice,jdbcType=DECIMAL},
+      discounted_price = #{discountedPrice,jdbcType=DECIMAL},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where master_order_id = #{masterOrderId,jdbcType=VARCHAR}
+  </update>
+
+	<select id="findByDate" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List"/>
+		from master_order
+		<where>
+			<if test="beginDate != null">
+				<![CDATA[
+				update_date >= #{beginDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+			<if test="endDate != null">
+				<![CDATA[
+				and update_date <= #{endDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+		</where>
+		order by update_date asc
+	</select>
+</mapper>

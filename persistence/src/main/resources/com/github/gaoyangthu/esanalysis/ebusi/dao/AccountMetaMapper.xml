@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AccountMetaMapper">
+	<resultMap id="BaseResultMap" type="AccountMeta">
+		<id column="account_id" property="accountId" jdbcType="VARCHAR"/>
+		<result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+		<result column="login_email" property="loginEmail" jdbcType="VARCHAR"/>
+		<result column="account_no" property="accountNo" jdbcType="VARCHAR"/>
+		<result column="FK_root_userid" property="fkRootUserid" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="account_type" property="accountType" jdbcType="INTEGER"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    account_id, login_name, login_email, account_no, FK_root_userid, create_date, account_type, 
+    status
+  </sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from account_meta
+		where account_id = #{accountId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account_meta
+    where account_id = #{accountId,jdbcType=VARCHAR}
+  </delete>
+	<insert id="insert" parameterType="AccountMeta">
+    insert into account_meta (account_id, login_name, login_email, 
+      account_no, FK_root_userid, create_date, 
+      account_type, status)
+    values (#{accountId,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{loginEmail,jdbcType=VARCHAR}, 
+      #{accountNo,jdbcType=VARCHAR}, #{fkRootUserid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{accountType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+  </insert>
+	<insert id="insertSelective" parameterType="AccountMeta">
+		insert into account_meta
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accountId != null">
+				account_id,
+			</if>
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="loginEmail != null">
+				login_email,
+			</if>
+			<if test="accountNo != null">
+				account_no,
+			</if>
+			<if test="fkRootUserid != null">
+				FK_root_userid,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="accountType != null">
+				account_type,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accountId != null">
+				#{accountId,jdbcType=VARCHAR},
+			</if>
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginEmail != null">
+				#{loginEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="accountNo != null">
+				#{accountNo,jdbcType=VARCHAR},
+			</if>
+			<if test="fkRootUserid != null">
+				#{fkRootUserid,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="accountType != null">
+				#{accountType,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="AccountMeta">
+		update account_meta
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginEmail != null">
+				login_email = #{loginEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="accountNo != null">
+				account_no = #{accountNo,jdbcType=VARCHAR},
+			</if>
+			<if test="fkRootUserid != null">
+				FK_root_userid = #{fkRootUserid,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="accountType != null">
+				account_type = #{accountType,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where account_id = #{accountId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="AccountMeta">
+    update account_meta
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      login_email = #{loginEmail,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      FK_root_userid = #{fkRootUserid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      account_type = #{accountType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where account_id = #{accountId,jdbcType=VARCHAR}
+  </update>
+
+	<select id="findByDate" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List"/>
+		from account_meta
+		<where>
+			<if test="beginDate != null">
+				<![CDATA[
+				create_date >= #{beginDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+			<if test="endDate != null">
+				<![CDATA[
+				and create_date <= #{endDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+		</where>
+		order by create_date asc
+	</select>
+</mapper>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EbusiDailyReportMapper">
+	<resultMap id="BaseResultMap" type="EbusiDailyReport">
+		<id column="bd_user_uuid" property="bdUserUuid" jdbcType="VARCHAR"/>
+		<id column="date" property="date" jdbcType="DATE"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="user_channel_tag" property="userChannelTag" jdbcType="VARCHAR"/>
+		<result column="first_channel_visit" property="firstChannelVisit" jdbcType="TIMESTAMP"/>
+		<result column="pv" property="pv" jdbcType="INTEGER"/>
+		<result column="register_count" property="registerCount" jdbcType="INTEGER"/>
+		<result column="total_order_count" property="totalOrderCount" jdbcType="INTEGER"/>
+		<result column="total_order_amount" property="totalOrderAmount" jdbcType="DECIMAL"/>
+		<result column="payed_order_count" property="payedOrderCount" jdbcType="INTEGER"/>
+		<result column="payed_order_amount" property="payedOrderAmount" jdbcType="DECIMAL"/>
+		<result column="order_trade_count" property="orderTradeCount" jdbcType="INTEGER"/>
+		<result column="order_cash_amount" property="orderCashAmount" jdbcType="DECIMAL"/>
+		<result column="order_credit_amount" property="orderCreditAmount" jdbcType="DECIMAL"/>
+		<result column="cash_charge_count" property="cashChargeCount" jdbcType="INTEGER"/>
+		<result column="cash_charge_amount" property="cashChargeAmount" jdbcType="DECIMAL"/>
+		<result column="credit_charge_count" property="creditChargeCount" jdbcType="INTEGER"/>
+		<result column="credit_charge_amount" property="creditChargeAmount" jdbcType="DECIMAL"/>
+		<result column="payout_count" property="payoutCount" jdbcType="INTEGER"/>
+		<result column="payout_amount" property="payoutAmount" jdbcType="DECIMAL"/>
+		<result column="withdrawal_count" property="withdrawalCount" jdbcType="INTEGER"/>
+		<result column="withdrawal_amount" property="withdrawalAmount" jdbcType="DECIMAL"/>
+		<result column="reject_withdrawal_count" property="rejectWithdrawalCount" jdbcType="INTEGER"/>
+		<result column="reject_withdrawal_amount" property="rejectWithdrawalAmount" jdbcType="DECIMAL"/>
+		<result column="refund_count" property="refundCount" jdbcType="INTEGER"/>
+		<result column="refund_amount" property="refundAmount" jdbcType="DECIMAL"/>
+		<result column="busi_charge_count" property="busiChargeCount" jdbcType="INTEGER"/>
+		<result column="busi_charge_amount" property="busiChargeAmount" jdbcType="DECIMAL"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    bd_user_uuid, date, email, user_name, user_channel_tag, first_channel_visit, pv, 
+    register_count, total_order_count, total_order_amount, payed_order_count, payed_order_amount, 
+    order_trade_count, order_cash_amount, order_credit_amount, cash_charge_count, cash_charge_amount, 
+    credit_charge_count, credit_charge_amount, payout_count, payout_amount, withdrawal_count, 
+    withdrawal_amount, reject_withdrawal_count, reject_withdrawal_amount, refund_count, 
+    refund_amount, busi_charge_count, busi_charge_amount
+  </sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+			parameterType="EbusiDailyReportKey">
+		select
+		<include refid="Base_Column_List"/>
+		from ebusi_daily_report
+		where bd_user_uuid = #{bdUserUuid,jdbcType=VARCHAR}
+		and date = #{date,jdbcType=DATE}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="EbusiDailyReportKey">
+    delete from ebusi_daily_report
+    where bd_user_uuid = #{bdUserUuid,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=DATE}
+  </delete>
+	<insert id="insert" parameterType="EbusiDailyReport">
+    insert into ebusi_daily_report (bd_user_uuid, date, email, 
+      user_name, user_channel_tag, first_channel_visit, 
+      pv, register_count, total_order_count, 
+      total_order_amount, payed_order_count, payed_order_amount, 
+      order_trade_count, order_cash_amount, order_credit_amount, 
+      cash_charge_count, cash_charge_amount, credit_charge_count, 
+      credit_charge_amount, payout_count, payout_amount, 
+      withdrawal_count, withdrawal_amount, reject_withdrawal_count, 
+      reject_withdrawal_amount, refund_count, refund_amount, 
+      busi_charge_count, busi_charge_amount)
+    values (#{bdUserUuid,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, #{email,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userChannelTag,jdbcType=VARCHAR}, #{firstChannelVisit,jdbcType=TIMESTAMP}, 
+      #{pv,jdbcType=INTEGER}, #{registerCount,jdbcType=INTEGER}, #{totalOrderCount,jdbcType=INTEGER}, 
+      #{totalOrderAmount,jdbcType=DECIMAL}, #{payedOrderCount,jdbcType=INTEGER}, #{payedOrderAmount,jdbcType=DECIMAL}, 
+      #{orderTradeCount,jdbcType=INTEGER}, #{orderCashAmount,jdbcType=DECIMAL}, #{orderCreditAmount,jdbcType=DECIMAL}, 
+      #{cashChargeCount,jdbcType=INTEGER}, #{cashChargeAmount,jdbcType=DECIMAL}, #{creditChargeCount,jdbcType=INTEGER}, 
+      #{creditChargeAmount,jdbcType=DECIMAL}, #{payoutCount,jdbcType=INTEGER}, #{payoutAmount,jdbcType=DECIMAL}, 
+      #{withdrawalCount,jdbcType=INTEGER}, #{withdrawalAmount,jdbcType=DECIMAL}, #{rejectWithdrawalCount,jdbcType=INTEGER}, 
+      #{rejectWithdrawalAmount,jdbcType=DECIMAL}, #{refundCount,jdbcType=INTEGER}, #{refundAmount,jdbcType=DECIMAL}, 
+      #{busiChargeCount,jdbcType=INTEGER}, #{busiChargeAmount,jdbcType=DECIMAL})
+  </insert>
+	<insert id="insertSelective" parameterType="EbusiDailyReport">
+		insert into ebusi_daily_report
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bdUserUuid != null">
+				bd_user_uuid,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="userChannelTag != null">
+				user_channel_tag,
+			</if>
+			<if test="firstChannelVisit != null">
+				first_channel_visit,
+			</if>
+			<if test="pv != null">
+				pv,
+			</if>
+			<if test="registerCount != null">
+				register_count,
+			</if>
+			<if test="totalOrderCount != null">
+				total_order_count,
+			</if>
+			<if test="totalOrderAmount != null">
+				total_order_amount,
+			</if>
+			<if test="payedOrderCount != null">
+				payed_order_count,
+			</if>
+			<if test="payedOrderAmount != null">
+				payed_order_amount,
+			</if>
+			<if test="orderTradeCount != null">
+				order_trade_count,
+			</if>
+			<if test="orderCashAmount != null">
+				order_cash_amount,
+			</if>
+			<if test="orderCreditAmount != null">
+				order_credit_amount,
+			</if>
+			<if test="cashChargeCount != null">
+				cash_charge_count,
+			</if>
+			<if test="cashChargeAmount != null">
+				cash_charge_amount,
+			</if>
+			<if test="creditChargeCount != null">
+				credit_charge_count,
+			</if>
+			<if test="creditChargeAmount != null">
+				credit_charge_amount,
+			</if>
+			<if test="payoutCount != null">
+				payout_count,
+			</if>
+			<if test="payoutAmount != null">
+				payout_amount,
+			</if>
+			<if test="withdrawalCount != null">
+				withdrawal_count,
+			</if>
+			<if test="withdrawalAmount != null">
+				withdrawal_amount,
+			</if>
+			<if test="rejectWithdrawalCount != null">
+				reject_withdrawal_count,
+			</if>
+			<if test="rejectWithdrawalAmount != null">
+				reject_withdrawal_amount,
+			</if>
+			<if test="refundCount != null">
+				refund_count,
+			</if>
+			<if test="refundAmount != null">
+				refund_amount,
+			</if>
+			<if test="busiChargeCount != null">
+				busi_charge_count,
+			</if>
+			<if test="busiChargeAmount != null">
+				busi_charge_amount,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bdUserUuid != null">
+				#{bdUserUuid,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=DATE},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userChannelTag != null">
+				#{userChannelTag,jdbcType=VARCHAR},
+			</if>
+			<if test="firstChannelVisit != null">
+				#{firstChannelVisit,jdbcType=TIMESTAMP},
+			</if>
+			<if test="pv != null">
+				#{pv,jdbcType=INTEGER},
+			</if>
+			<if test="registerCount != null">
+				#{registerCount,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrderCount != null">
+				#{totalOrderCount,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrderAmount != null">
+				#{totalOrderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payedOrderCount != null">
+				#{payedOrderCount,jdbcType=INTEGER},
+			</if>
+			<if test="payedOrderAmount != null">
+				#{payedOrderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderTradeCount != null">
+				#{orderTradeCount,jdbcType=INTEGER},
+			</if>
+			<if test="orderCashAmount != null">
+				#{orderCashAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderCreditAmount != null">
+				#{orderCreditAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="cashChargeCount != null">
+				#{cashChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="cashChargeAmount != null">
+				#{cashChargeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="creditChargeCount != null">
+				#{creditChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="creditChargeAmount != null">
+				#{creditChargeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payoutCount != null">
+				#{payoutCount,jdbcType=INTEGER},
+			</if>
+			<if test="payoutAmount != null">
+				#{payoutAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalCount != null">
+				#{withdrawalCount,jdbcType=INTEGER},
+			</if>
+			<if test="withdrawalAmount != null">
+				#{withdrawalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="rejectWithdrawalCount != null">
+				#{rejectWithdrawalCount,jdbcType=INTEGER},
+			</if>
+			<if test="rejectWithdrawalAmount != null">
+				#{rejectWithdrawalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="refundCount != null">
+				#{refundCount,jdbcType=INTEGER},
+			</if>
+			<if test="refundAmount != null">
+				#{refundAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="busiChargeCount != null">
+				#{busiChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="busiChargeAmount != null">
+				#{busiChargeAmount,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="EbusiDailyReport">
+		update ebusi_daily_report
+		<set>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userChannelTag != null">
+				user_channel_tag = #{userChannelTag,jdbcType=VARCHAR},
+			</if>
+			<if test="firstChannelVisit != null">
+				first_channel_visit = #{firstChannelVisit,jdbcType=TIMESTAMP},
+			</if>
+			<if test="pv != null">
+				pv = #{pv,jdbcType=INTEGER},
+			</if>
+			<if test="registerCount != null">
+				register_count = #{registerCount,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrderCount != null">
+				total_order_count = #{totalOrderCount,jdbcType=INTEGER},
+			</if>
+			<if test="totalOrderAmount != null">
+				total_order_amount = #{totalOrderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payedOrderCount != null">
+				payed_order_count = #{payedOrderCount,jdbcType=INTEGER},
+			</if>
+			<if test="payedOrderAmount != null">
+				payed_order_amount = #{payedOrderAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderTradeCount != null">
+				order_trade_count = #{orderTradeCount,jdbcType=INTEGER},
+			</if>
+			<if test="orderCashAmount != null">
+				order_cash_amount = #{orderCashAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderCreditAmount != null">
+				order_credit_amount = #{orderCreditAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="cashChargeCount != null">
+				cash_charge_count = #{cashChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="cashChargeAmount != null">
+				cash_charge_amount = #{cashChargeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="creditChargeCount != null">
+				credit_charge_count = #{creditChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="creditChargeAmount != null">
+				credit_charge_amount = #{creditChargeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payoutCount != null">
+				payout_count = #{payoutCount,jdbcType=INTEGER},
+			</if>
+			<if test="payoutAmount != null">
+				payout_amount = #{payoutAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalCount != null">
+				withdrawal_count = #{withdrawalCount,jdbcType=INTEGER},
+			</if>
+			<if test="withdrawalAmount != null">
+				withdrawal_amount = #{withdrawalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="rejectWithdrawalCount != null">
+				reject_withdrawal_count = #{rejectWithdrawalCount,jdbcType=INTEGER},
+			</if>
+			<if test="rejectWithdrawalAmount != null">
+				reject_withdrawal_amount = #{rejectWithdrawalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="refundCount != null">
+				refund_count = #{refundCount,jdbcType=INTEGER},
+			</if>
+			<if test="refundAmount != null">
+				refund_amount = #{refundAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="busiChargeCount != null">
+				busi_charge_count = #{busiChargeCount,jdbcType=INTEGER},
+			</if>
+			<if test="busiChargeAmount != null">
+				busi_charge_amount = #{busiChargeAmount,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where bd_user_uuid = #{bdUserUuid,jdbcType=VARCHAR}
+		and date = #{date,jdbcType=DATE}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="EbusiDailyReport">
+    update ebusi_daily_report
+    set email = #{email,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_channel_tag = #{userChannelTag,jdbcType=VARCHAR},
+      first_channel_visit = #{firstChannelVisit,jdbcType=TIMESTAMP},
+      pv = #{pv,jdbcType=INTEGER},
+      register_count = #{registerCount,jdbcType=INTEGER},
+      total_order_count = #{totalOrderCount,jdbcType=INTEGER},
+      total_order_amount = #{totalOrderAmount,jdbcType=DECIMAL},
+      payed_order_count = #{payedOrderCount,jdbcType=INTEGER},
+      payed_order_amount = #{payedOrderAmount,jdbcType=DECIMAL},
+      order_trade_count = #{orderTradeCount,jdbcType=INTEGER},
+      order_cash_amount = #{orderCashAmount,jdbcType=DECIMAL},
+      order_credit_amount = #{orderCreditAmount,jdbcType=DECIMAL},
+      cash_charge_count = #{cashChargeCount,jdbcType=INTEGER},
+      cash_charge_amount = #{cashChargeAmount,jdbcType=DECIMAL},
+      credit_charge_count = #{creditChargeCount,jdbcType=INTEGER},
+      credit_charge_amount = #{creditChargeAmount,jdbcType=DECIMAL},
+      payout_count = #{payoutCount,jdbcType=INTEGER},
+      payout_amount = #{payoutAmount,jdbcType=DECIMAL},
+      withdrawal_count = #{withdrawalCount,jdbcType=INTEGER},
+      withdrawal_amount = #{withdrawalAmount,jdbcType=DECIMAL},
+      reject_withdrawal_count = #{rejectWithdrawalCount,jdbcType=INTEGER},
+      reject_withdrawal_amount = #{rejectWithdrawalAmount,jdbcType=DECIMAL},
+      refund_count = #{refundCount,jdbcType=INTEGER},
+      refund_amount = #{refundAmount,jdbcType=DECIMAL},
+      busi_charge_count = #{busiChargeCount,jdbcType=INTEGER},
+      busi_charge_amount = #{busiChargeAmount,jdbcType=DECIMAL}
+    where bd_user_uuid = #{bdUserUuid,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=DATE}
+  </update>
+</mapper>

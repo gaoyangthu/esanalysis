@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LogParseRuleMapper">
+	<resultMap id="BaseResultMap" type="LogParseRule">
+		<result column="serial_id" property="serialId" jdbcType="INTEGER"/>
+		<result column="father_ids" property="fatherIds" jdbcType="ARRAY"/>
+		<result column="child_ids" property="childIds" jdbcType="ARRAY"/>
+		<result column="finish_tag" property="finishTag" jdbcType="INTEGER"/>
+		<result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+		<result column="edit_log" property="editLog" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="rule_name" property="ruleName" jdbcType="VARCHAR"/>
+		<result column="parse_regex" property="parseRegex" jdbcType="VARCHAR"/>
+		<result column="group_dict" property="groupDict" jdbcType="ARRAY"/>
+	</resultMap>
+	<insert id="insert" parameterType="LogParseRule">
+    insert into log_parse_rule (serial_id, father_ids, child_ids, 
+      finish_tag, remarks, edit_log, 
+      update_time, status, rule_name, 
+      parse_regex, group_dict)
+    values (#{serialId,jdbcType=INTEGER}, #{fatherIds,jdbcType=ARRAY}, #{childIds,jdbcType=ARRAY}, 
+      #{finishTag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{editLog,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{ruleName,jdbcType=VARCHAR}, 
+      #{parseRegex,jdbcType=VARCHAR}, #{groupDict,jdbcType=ARRAY})
+  </insert>
+	<insert id="insertSelective" parameterType="LogParseRule">
+		insert into log_parse_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				serial_id,
+			</if>
+			<if test="fatherIds != null">
+				father_ids,
+			</if>
+			<if test="childIds != null">
+				child_ids,
+			</if>
+			<if test="finishTag != null">
+				finish_tag,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="editLog != null">
+				edit_log,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="ruleName != null">
+				rule_name,
+			</if>
+			<if test="parseRegex != null">
+				parse_regex,
+			</if>
+			<if test="groupDict != null">
+				group_dict,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				#{serialId,jdbcType=INTEGER},
+			</if>
+			<if test="fatherIds != null">
+				#{fatherIds,jdbcType=ARRAY},
+			</if>
+			<if test="childIds != null">
+				#{childIds,jdbcType=ARRAY},
+			</if>
+			<if test="finishTag != null">
+				#{finishTag,jdbcType=INTEGER},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="editLog != null">
+				#{editLog,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="ruleName != null">
+				#{ruleName,jdbcType=VARCHAR},
+			</if>
+			<if test="parseRegex != null">
+				#{parseRegex,jdbcType=VARCHAR},
+			</if>
+			<if test="groupDict != null">
+				#{groupDict,jdbcType=ARRAY},
+			</if>
+		</trim>
+	</insert>
+</mapper>

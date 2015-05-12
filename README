@@ -1,0 +1,12 @@
+开放环境，工程代码添加
+
+1. eclipse 准备
+http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/kepler/SR2/eclipse-jee-kepler-SR2-win32-x86_64.zip&mirror_id=1142
+
+2. eclipse > Import > Maven > Existing Maven Projects
+
+# 如果，工程上有提示如下错误
+Project configuration is not up-to-date ...
+
+maven update project 就可以了
+在工程上名称上， Alt + F5

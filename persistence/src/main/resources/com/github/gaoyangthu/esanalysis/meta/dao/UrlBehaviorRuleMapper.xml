@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UrlBehaviorRuleMapper">
+	<resultMap id="BaseResultMap" type="UrlBehaviorRule">
+		<id column="serial_id" property="serialId" jdbcType="INTEGER"/>
+		<result column="father_ids" property="fatherIds" jdbcType="ARRAY"/>
+		<result column="child_ids" property="childIds" jdbcType="ARRAY"/>
+		<result column="finish_tag" property="finishTag" jdbcType="INTEGER"/>
+		<result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+		<result column="edit_log" property="editLog" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="url_regex" property="urlRegex" jdbcType="VARCHAR"/>
+		<result column="user_behavior_id" property="userBehaviorId" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+    serial_id, father_ids, child_ids, finish_tag, remarks, edit_log, update_time, status, 
+    url_regex, user_behavior_id
+  </sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"/>
+		from url_behavior_rule
+		where serial_id = #{serialId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from url_behavior_rule
+    where serial_id = #{serialId,jdbcType=INTEGER}
+  </delete>
+
+	<insert id="insert" parameterType="UrlBehaviorRule">
+    insert into url_behavior_rule (serial_id, father_ids, child_ids, 
+      finish_tag, remarks, edit_log, 
+      update_time, status, url_regex, 
+      user_behavior_id)
+    values (#{serialId,jdbcType=INTEGER}, #{fatherIds,jdbcType=ARRAY}, #{childIds,jdbcType=ARRAY}, 
+      #{finishTag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{editLog,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{urlRegex,jdbcType=VARCHAR}, 
+      #{userBehaviorId,jdbcType=INTEGER})
+  </insert>
+
+	<insert id="insertSelective" parameterType="UrlBehaviorRule">
+		insert into url_behavior_rule
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				serial_id,
+			</if>
+			<if test="fatherIds != null">
+				father_ids,
+			</if>
+			<if test="childIds != null">
+				child_ids,
+			</if>
+			<if test="finishTag != null">
+				finish_tag,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="editLog != null">
+				edit_log,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="urlRegex != null">
+				url_regex,
+			</if>
+			<if test="userBehaviorId != null">
+				user_behavior_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				#{serialId,jdbcType=INTEGER},
+			</if>
+			<if test="fatherIds != null">
+				#{fatherIds,jdbcType=ARRAY},
+			</if>
+			<if test="childIds != null">
+				#{childIds,jdbcType=ARRAY},
+			</if>
+			<if test="finishTag != null">
+				#{finishTag,jdbcType=INTEGER},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="editLog != null">
+				#{editLog,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="urlRegex != null">
+				#{urlRegex,jdbcType=VARCHAR},
+			</if>
+			<if test="userBehaviorId != null">
+				#{userBehaviorId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="UrlBehaviorRule">
+		update url_behavior_rule
+		<set>
+			<if test="fatherIds != null">
+				father_ids = #{fatherIds,jdbcType=ARRAY},
+			</if>
+			<if test="childIds != null">
+				child_ids = #{childIds,jdbcType=ARRAY},
+			</if>
+			<if test="finishTag != null">
+				finish_tag = #{finishTag,jdbcType=INTEGER},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="editLog != null">
+				edit_log = #{editLog,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="urlRegex != null">
+				url_regex = #{urlRegex,jdbcType=VARCHAR},
+			</if>
+			<if test="userBehaviorId != null">
+				user_behavior_id = #{userBehaviorId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where serial_id = #{serialId,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="UrlBehaviorRule">
+    update url_behavior_rule
+    set father_ids = #{fatherIds,jdbcType=ARRAY},
+      child_ids = #{childIds,jdbcType=ARRAY},
+      finish_tag = #{finishTag,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      edit_log = #{editLog,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      url_regex = #{urlRegex,jdbcType=VARCHAR},
+      user_behavior_id = #{userBehaviorId,jdbcType=INTEGER}
+    where serial_id = #{serialId,jdbcType=INTEGER}
+  </update>
+
+	<select id="findByUrlRegex" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from url_behavior_rule
+		where url_regex = #{urlRegex,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByUserBehavior" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"/>
+		from url_behavior_rule
+		where user_behavior_id = #{userBehaviorId,jdbcType=INTEGER}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from url_behavior_rule
+	</select>
+</mapper>

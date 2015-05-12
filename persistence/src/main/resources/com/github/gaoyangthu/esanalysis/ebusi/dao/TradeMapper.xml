@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TradeMapper">
+	<resultMap id="BaseResultMap" type="Trade">
+		<id column="trade_id" property="tradeId" jdbcType="VARCHAR"/>
+		<result column="trade_type" property="tradeType" jdbcType="INTEGER"/>
+		<result column="FK_source_id" property="fkSourceId" jdbcType="VARCHAR"/>
+		<result column="FK_account_id" property="fkAccountId" jdbcType="VARCHAR"/>
+		<result column="FK_user_id" property="fkUserId" jdbcType="VARCHAR"/>
+		<result column="trade_time" property="tradeTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="Trade" extends="BaseResultMap">
+		<result column="extra_info" property="extraInfo" jdbcType="LONGVARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    trade_id, trade_type, FK_source_id, FK_account_id, FK_user_id, trade_time, status
+  </sql>
+	<sql id="Blob_Column_List">
+    extra_info
+  </sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from trade
+		where trade_id = #{tradeId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from trade
+    where trade_id = #{tradeId,jdbcType=VARCHAR}
+  </delete>
+	<insert id="insert" parameterType="Trade">
+    insert into trade (trade_id, trade_type, FK_source_id, 
+      FK_account_id, FK_user_id, trade_time, 
+      status, extra_info)
+    values (#{tradeId,jdbcType=VARCHAR}, #{tradeType,jdbcType=INTEGER}, #{fkSourceId,jdbcType=VARCHAR}, 
+      #{fkAccountId,jdbcType=VARCHAR}, #{fkUserId,jdbcType=VARCHAR}, #{tradeTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{extraInfo,jdbcType=LONGVARCHAR})
+  </insert>
+	<insert id="insertSelective" parameterType="Trade">
+		insert into trade
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tradeId != null">
+				trade_id,
+			</if>
+			<if test="tradeType != null">
+				trade_type,
+			</if>
+			<if test="fkSourceId != null">
+				FK_source_id,
+			</if>
+			<if test="fkAccountId != null">
+				FK_account_id,
+			</if>
+			<if test="fkUserId != null">
+				FK_user_id,
+			</if>
+			<if test="tradeTime != null">
+				trade_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="extraInfo != null">
+				extra_info,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tradeId != null">
+				#{tradeId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeType != null">
+				#{tradeType,jdbcType=INTEGER},
+			</if>
+			<if test="fkSourceId != null">
+				#{fkSourceId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkAccountId != null">
+				#{fkAccountId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkUserId != null">
+				#{fkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeTime != null">
+				#{tradeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="extraInfo != null">
+				#{extraInfo,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="Trade">
+		update trade
+		<set>
+			<if test="tradeType != null">
+				trade_type = #{tradeType,jdbcType=INTEGER},
+			</if>
+			<if test="fkSourceId != null">
+				FK_source_id = #{fkSourceId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkAccountId != null">
+				FK_account_id = #{fkAccountId,jdbcType=VARCHAR},
+			</if>
+			<if test="fkUserId != null">
+				FK_user_id = #{fkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradeTime != null">
+				trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="extraInfo != null">
+				extra_info = #{extraInfo,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where trade_id = #{tradeId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="Trade">
+    update trade
+    set trade_type = #{tradeType,jdbcType=INTEGER},
+      FK_source_id = #{fkSourceId,jdbcType=VARCHAR},
+      FK_account_id = #{fkAccountId,jdbcType=VARCHAR},
+      FK_user_id = #{fkUserId,jdbcType=VARCHAR},
+      trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      extra_info = #{extraInfo,jdbcType=LONGVARCHAR}
+    where trade_id = #{tradeId,jdbcType=VARCHAR}
+  </update>
+	<update id="updateByPrimaryKey" parameterType="Trade">
+    update trade
+    set trade_type = #{tradeType,jdbcType=INTEGER},
+      FK_source_id = #{fkSourceId,jdbcType=VARCHAR},
+      FK_account_id = #{fkAccountId,jdbcType=VARCHAR},
+      FK_user_id = #{fkUserId,jdbcType=VARCHAR},
+      trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where trade_id = #{tradeId,jdbcType=VARCHAR}
+  </update>
+
+	<select id="findByDate" resultMap="ResultMapWithBLOBs" parameterType="map">
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from trade
+		<where>
+			<if test="tradeType != null">
+				trade_type = #{tradeType,jdbcType=INTEGER}
+			</if>
+			<if test="beginDate != null">
+				<![CDATA[
+				and trade_time >= #{beginDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+			<if test="endDate != null">
+				<![CDATA[
+				and trade_time <= #{endDate,jdbcType=TIMESTAMP}
+				]]>
+			</if>
+		</where>
+		order by trade_time asc
+	</select>
+
+	<select id="findOrderTrade" resultMap="ResultMapWithBLOBs" parameterType="String">
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from trade
+		<where>
+			FK_source_id = #{sourceId,jdbcType=VARCHAR}
+		</where>
+	</select>
+</mapper>

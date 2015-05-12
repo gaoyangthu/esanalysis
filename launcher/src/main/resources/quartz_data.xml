@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+					 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					 xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd"
+					 version="1.8">
+
+	<pre-processing-commands>
+		<delete-jobs-in-group>*</delete-jobs-in-group>
+		<!-- clear all jobs in scheduler -->
+		<delete-triggers-in-group>*</delete-triggers-in-group>
+		<!-- clear all triggers in scheduler -->
+	</pre-processing-commands>
+
+	<processing-directives>
+		<!-- if there are any jobs/trigger in scheduler of same name (as in this file), overwrite them -->
+		<overwrite-existing-data>true</overwrite-existing-data>
+		<!-- if there are any jobs/trigger in scheduler of same name (as in this file), and over-write is false, ignore them rather then generating an error -->
+		<ignore-duplicates>false</ignore-duplicates>
+	</processing-directives>
+
+	<schedule>
+		<job>
+			<name>MetaJob</name>
+			<group>ESAnalysisJob</group>
+			<description>DataBase Job</description>
+			<job-class>MetaJob</job-class>
+		</job>
+		<trigger>
+			<cron>
+				<name>MetaCronTrigger</name>
+				<group>ESAnalysisTrigger</group>
+				<job-name>MetaJob</job-name>
+				<job-group>ESAnalysisJob</job-group>
+				<cron-expression>0 0 * * * *</cron-expression>
+			</cron>
+		</trigger>
+
+		<job>
+			<name>DBJob</name>
+			<group>ESAnalysisJob</group>
+			<description>DataBase Job</description>
+			<job-class>DBJob</job-class>
+		</job>
+		<trigger>
+			<cron>
+				<name>DBCronTrigger</name>
+				<group>ESAnalysisTrigger</group>
+				<job-name>DBJob</job-name>
+				<job-group>ESAnalysisJob</job-group>
+				<cron-expression>0 1 * * * *</cron-expression>
+			</cron>
+		</trigger>
+
+		<job>
+			<name>BDBJob</name>
+			<group>ESAnalysisJob</group>
+			<description>BerkeleyDB Job</description>
+			<job-class>BDBJob</job-class>
+		</job>
+		<trigger>
+			<cron>
+				<name>BDBCronTrigger</name>
+				<group>ESAnalysisTrigger</group>
+				<job-name>BDBJob</job-name>
+				<job-group>ESAnalysisJob</job-group>
+				<cron-expression>30 0 * * * *</cron-expression>
+			</cron>
+		</trigger>
+	</schedule>
+</job-scheduling-data>

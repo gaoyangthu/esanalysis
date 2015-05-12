@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<configuration>
+
+  <property>
+    <name>dfs.nameservices</name>
+    <value>bdcluster</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.namenodes.bdcluster</name>
+    <value>nn101,nn103</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.rpc-address.bdcluster.nn101</name>
+    <value>bigdata101:8020</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.rpc-address.bdcluster.nn103</name>
+    <value>bigdata103:8020</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.bdcluster.nn101</name>
+    <value>bigdata101:50070</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.http-address.bdcluster.nn103</name>
+    <value>bigdata103:50070</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://bigdata101:8485;bigdata102:8485;bigdata103:8485/bdcluster</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/data/disk01/hadoop/hdfs/journalnode</value>
+  </property>
+
+  <property>
+    <name>dfs.client.failover.proxy.provider.bdcluster</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>sshfence</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/var/lib/hadoop-hdfs/.ssh/id_dsa</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>bigdata101:2181,bigdata102:2181,bigdata103:2181</value>
+  </property>
+
+  <property>
+    <name>dfs.permissions.superusergroup</name>
+    <value>hadoop</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/data/disk01/hadoop/hdfs/namenode</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/data/disk01/hadoop/hdfs/datanode,/data/disk02/hadoop/hdfs/datanode,/data/disk03/hadoop/hdfs/datanode,/data/disk04/hadoop/hdfs/datanode,/data/disk05/hadoop/hdfs/datanode</value>
+  </property>
+
+  <property>  
+    <name>dfs.datanode.failed.volumes.tolerated</name>  
+    <value>3</value>  
+  </property>
+
+  <property>
+    <name>dfs.datanode.max.xcievers</name>
+    <value>4096</value>
+  </property>
+
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+</configuration>

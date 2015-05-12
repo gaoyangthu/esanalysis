@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <parent>
+    <groupId>com.github.gaoyangthu</groupId>
+    <artifactId>esanalysis</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>launcher</artifactId>
+  <name>launcher</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <!-- 部署后，命令执行权限  -->
+    <run.username>root</run.username>
+    <run.groupname>root</run.groupname>
+    <run.filemode>750</run.filemode>
+
+    <!-- 模块运行入口 src/main/script/${文件} -->
+    <!-- 运行 -->
+    <run.scriptFile>esanalysis</run.scriptFile>
+
+    <!-- jar-with-dependencies mainClass -->
+    <run.jar.mainClass>com.github.gaoyangthu.esanalysis.App</run.jar.mainClass>
+    <run.jar.descriptorRef>jar-with-dependencies</run.jar.descriptorRef>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.gaoyangthu</groupId>
+      <artifactId>core</artifactId>
+      <version>${esanalysis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.gaoyangthu</groupId>
+      <artifactId>db_collect_data</artifactId>
+      <version>${esanalysis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.gaoyangthu</groupId>
+      <artifactId>log_collect_data</artifactId>
+      <version>${esanalysis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.gaoyangthu</groupId>
+      <artifactId>es_analysis</artifactId>
+      <version>${esanalysis.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>PageViewCount</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- rpm 打包   -->
+      <!-- http://mojo.codehaus.org/rpm-maven-plugin/example1.html -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <version>2.1-alpha-3</version>
+        <configuration>
+          <copyright>2005, SWWDC</copyright>
+          <distribution>Trash 2005</distribution>
+          <group>Application/Collectors</group>
+          <icon>src/main/resources/icon.gif</icon>
+          <packager>SWWDC</packager>
+          <prefix>/</prefix>
+          <changelogFile>src/changelog</changelogFile>
+          <defineStatements>
+            <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
+          </defineStatements>
+          <mappings>
+
+            <mapping>
+              <!-- jar-with-dependencies 注入 -->
+              <directory>/Application/${project.artifactId}/${project.version}/lib</directory>
+              <sources>
+                <source>
+                  <location>
+                    ${project.build.directory}/${project.build.finalName}-${run.jar.descriptorRef}.jar
+                  </location>
+                </source>
+              </sources>
+            </mapping>
+
+
+            <mapping>
+              <!-- script 注入 -->
+              <directory>/Application/${project.artifactId}/${project.version}/scripts</directory>
+              <filemode>${run.filemode}</filemode>
+              <username>${run.username}</username>
+              <groupname>${run.groupname}</groupname>
+              <sources>
+                <source>
+                  <location>src/main/scripts</location>
+                </source>
+              </sources>
+            </mapping>
+
+            <mapping>
+              <!-- 建立可执行软连 -->
+              <directory>/usr/local/bin</directory>
+              <filemode>${run.filemode}</filemode>
+              <username>${run.username}</username>
+              <groupname>${run.groupname}</groupname>
+              <sources>
+                <softlinkSource>
+                  <location>
+                    /Application/${project.artifactId}/${project.version}/scripts/${run.scriptFile}
+                  </location>
+                  <destination>${project.artifactId}</destination>
+                </softlinkSource>
+              </sources>
+            </mapping>
+
+
+          </mappings>
+
+          <installScriptlet>  <!--  安装运行命令   -->
+            <script>echo "installing now"</script>
+          </installScriptlet>
+          <postinstallScriptlet>  <!--  安装运行脚步   -->
+            <scriptFile>src/main/scripts/postinstall</scriptFile>
+            <fileEncoding>utf-8</fileEncoding>
+          </postinstallScriptlet>
+          <postremoveScriptlet>  <!--  删除运行脚步   -->
+            <scriptFile>src/main/scripts/preremove</scriptFile>
+            <fileEncoding>utf-8</fileEncoding>
+          </postremoveScriptlet>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserBehaviorMetaMapper">
+	<resultMap id="BaseResultMap" type="UserBehaviorMeta">
+		<id column="serial_id" property="serialId" jdbcType="INTEGER"/>
+		<result column="row_id" property="rowId" jdbcType="VARCHAR"/>
+		<result column="meta_name" property="metaName" jdbcType="VARCHAR"/>
+		<result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+		<result column="edit_log" property="editLog" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+    serial_id, row_id, meta_name, remarks, edit_log, update_time, status
+  </sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List"/>
+		from user_behavior_meta
+		where serial_id = #{serialId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_behavior_meta
+    where serial_id = #{serialId,jdbcType=INTEGER}
+  </delete>
+
+	<insert id="insert" parameterType="UserBehaviorMeta">
+    insert into user_behavior_meta (serial_id, row_id, meta_name, 
+      remarks, edit_log, update_time, 
+      status)
+    values (#{serialId,jdbcType=INTEGER}, #{rowId,jdbcType=VARCHAR}, #{metaName,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{editLog,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+
+	<insert id="insertSelective" parameterType="UserBehaviorMeta">
+		insert into user_behavior_meta
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				serial_id,
+			</if>
+			<if test="rowId != null">
+				row_id,
+			</if>
+			<if test="metaName != null">
+				meta_name,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="editLog != null">
+				edit_log,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="serialId != null">
+				#{serialId,jdbcType=INTEGER},
+			</if>
+			<if test="rowId != null">
+				#{rowId,jdbcType=VARCHAR},
+			</if>
+			<if test="metaName != null">
+				#{metaName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="editLog != null">
+				#{editLog,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="UserBehaviorMeta">
+		update user_behavior_meta
+		<set>
+			<if test="rowId != null">
+				row_id = #{rowId,jdbcType=VARCHAR},
+			</if>
+			<if test="metaName != null">
+				meta_name = #{metaName,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="editLog != null">
+				edit_log = #{editLog,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where serial_id = #{serialId,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="UserBehaviorMeta">
+    update user_behavior_meta
+    set row_id = #{rowId,jdbcType=VARCHAR},
+      meta_name = #{metaName,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      edit_log = #{editLog,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where serial_id = #{serialId,jdbcType=INTEGER}
+  </update>
+</mapper>
